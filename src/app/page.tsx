@@ -42,7 +42,7 @@ export default function Home() {
           {isSucces && (
             <div className="w-full md:w-1/2 h-10 my-4 px-4 flex justify-between items-center  border border-zinc-800 rounded-3xl">
               <p className="text-base">cendhake.vercel.app/{slug} </p>
-              <button type="button" onClick={() => navigator.clipboard.writeText(`cendhake.vercel.app/${slug}`)}>
+              <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${slug}`)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path
                     strokeLinecap="round"
