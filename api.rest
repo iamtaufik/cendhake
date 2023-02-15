@@ -1,0 +1,13 @@
+POST http://localhost:3000/api/link
+Content-Type: application/json
+
+{
+    "url": "https://facebook.com",
+    "slug": "yt"
+}
+
+###
+GET http://localhost:3000/api/link/yt HTTP/1.
+
+###
+GET http://localhost:3000/api
