@@ -2,14 +2,27 @@
 import Navbar from '../components/Navbar';
 import Alret from '@/components/Alret';
 import Button from '@/components/Button';
-import axios from 'axios';
-import { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import moment from 'moment';
 
 export default function Home() {
   const [url, seturl] = useState('');
   const [slug, setSlug] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [isSucces, setIsSucces] = useState(false);
+  const [links, setLinks] = useState([]);
+  const { data: session } = useSession();
+
+  const getMyLinks = async () => {
+    try {
+      const result: AxiosResponse = await axios.get('/api/link');
+      setLinks(result.data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -19,6 +32,7 @@ export default function Home() {
       await axios.post('/api/link', {
         url,
         slug,
+        publisher: session ? session.user?.email : '',
       });
       setIsSucces(true);
     } catch (error: any) {
@@ -27,10 +41,16 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    if (session) {
+      getMyLinks();
+    }
+  }, [session, isSucces]);
+
   return (
     <>
       <Navbar />
-      <div className="container flex flex-col items-center justify-center gap-16 pt-20">
+      <div className="container flex flex-col items-center justify-center gap-16 pt-20 ">
         <div className="w-full md:w-1/2">
           <h1 className="text-xl font-semibold text-center text-zinc-800">Cendhake</h1>
           <p className="mt-5 text-base text-center text-zinc-700">
@@ -40,7 +60,7 @@ export default function Home() {
         </div>
         <div className="w-full md:w-1/2">
           {isSucces && (
-            <div className="w-full md:w-1/2 h-10 my-4 px-4 flex justify-between items-center  border border-zinc-800 rounded-3xl">
+            <div className="w-full  h-10 my-4 px-4 flex justify-between items-center  border border-zinc-800 rounded-3xl">
               <p className="text-base">cendhake.vercel.app/{slug} </p>
               <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${slug}`)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -69,8 +89,57 @@ export default function Home() {
             </div>
           </form>
         </div>
+        {session && (
+          <div className="w-full md:overflow-hidden overflow-x-scroll rounded-md shadow-md">
+            <div className="w-full overflow-x-auto">
+              <table className="w-full whitespace-no-wrap">
+                <thead>
+                  <tr
+                    className="
+            font-medium
+            tracking-wide
+            text-zinc-800
+            bg-zinc-50
+            uppercase
+            border-b
+            border-zinc-800
+          "
+                  >
+                    <th className="px-6 py-3 text-left">No.</th>
+                    <th className="px-6 py-3 text-left">URL</th>
+                    <th className="px-6 py-3 text-left">Slug</th>
+                    <th className="px-6 py-3 text-left">Created At</th>
+                    <th className="px-6 py-3 text-left">Copy</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {links.map((link: Link, index: number) => (
+                    <tr key={link.id}>
+                      <td className="px-6 py-4 whitespace-no-wrap">{index + 1}</td>
+                      <td className="px-6 py-4 whitespace-no-wrap">{link.url}</td>
+                      <td className="px-6 py-4 whitespace-no-wrap">{link.slug}</td>
+                      <td className="px-6 py-4 whitespace-no-wrap">{moment(link.createdAt).format('L')}</td>
+                      <td className="px-6 py-4 whitespace-no-wrap">
+                        <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${link.slug}`)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z"
+                            />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
-      <footer className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+
+      <footer className={!session ? 'absolute bottom-0 left-1/2 transform -translate-x-1/2' : 'mt-12'}>
         <p className="text-base text-center">
           Created By{' '}
           <a href="https://instagram.com/this.taufik" target="_blank" className="font-semibold">
