@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^8.0.0",
     "@next/font": "13.1.6",
     "@prisma/client": "^4.10.1",
     "@types/node": "^18.13.0",
