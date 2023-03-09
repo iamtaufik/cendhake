@@ -11,8 +11,14 @@ export default function Page() {
   }
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <Button type="button" text={`Login menggunakan Google`} className="border border-zinc-800 text-zinc-800 font-semibold transition-colors hover:bg-zinc-800 hover:text-white rounded-md" onClick={() => signIn('google')} />
+    <div className="flex items-center justify-center h-screen">
+      <Button
+        type="button"
+        text={`Login menggunakan Google`}
+        className="font-semibold transition-colors border rounded-md border-zinc-800 text-zinc-800 hover:bg-zinc-800 hover:text-white"
+        onClick={() => signIn('google')}
+        ariaLabel="Login menggunakan akun Google"
+      />
     </div>
   );
 }
