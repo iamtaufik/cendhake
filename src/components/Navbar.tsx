@@ -7,16 +7,16 @@ const Navbar = () => {
 
   return (
     <nav className="w-full border-b border-zinc-400">
-      <div className="flex container py-2 justify-between items-center ">
+      <div className="container flex items-center justify-between py-2 ">
         <h1 className="text-2xl font-bold">Cendhake</h1>
-        <div className="w-1/2 flex justify-end items-center">
+        <div className="flex items-center justify-end w-1/2">
           {session ? (
             <>
-              <p className="text-sm px-2 text-center">{session?.user?.name}</p>
-              <Button type="button" text="Logout" className="bg-zinc-800 text-white transition-colors hover:bg-zinc-600" onClick={signOut} />
+              <p className="px-2 text-sm text-center">{session?.user?.name}</p>
+              <Button type="button" text="Logout" className="text-white transition-colors bg-zinc-800 hover:bg-zinc-600" onClick={signOut} ariaLabel="Logout" />
             </>
           ) : (
-            <Button type="button" text="Login" className="bg-zinc-800 text-white transition-colors hover:bg-zinc-600" onClick={signIn} />
+            <Button type="button" text="Login" className="text-white transition-colors bg-zinc-800 hover:bg-zinc-600" onClick={signIn} ariaLabel="Login" />
           )}
         </div>
       </div>

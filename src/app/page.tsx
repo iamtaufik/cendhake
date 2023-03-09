@@ -71,7 +71,7 @@ export default function Home() {
           {isSucces && (
             <div className="flex items-center justify-between w-full h-10 px-4 my-4 border border-zinc-800 rounded-3xl">
               <p className="text-base">cendhake.vercel.app/{slug} </p>
-              <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${slug}`)}>
+              <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${slug}`)} aria-label="Copy Shorturl">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path
                     strokeLinecap="round"
@@ -94,7 +94,7 @@ export default function Home() {
               <input type="text" className="w-5/12 h-10 px-4 border lg:w-1/2 rounded-r-3xl border-zinc-800" placeholder="Link singkatmu" value={slug} onChange={(e) => setSlug(e.target.value)} />
             </div>
             <div className="flex justify-center w-full">
-              <Button type="submit" text="Buat" className="w-1/4 text-white transition-colors bg-zinc-800 hover:bg-zinc-600" />
+              <Button type="submit" text="Buat" className="w-1/4 text-white transition-colors bg-zinc-800 hover:bg-zinc-600" ariaLabel="Buat" />
             </div>
           </form>
         </div>
@@ -120,7 +120,7 @@ export default function Home() {
                       <td className="px-6 py-4 whitespace-no-wrap">{link.slug}</td>
                       <td className="px-6 py-4 whitespace-no-wrap">{moment(link.createdAt).format('L')}</td>
                       <td className="px-6 py-4 text-center whitespace-no-wrap">
-                        <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${link.slug}`)}>
+                        <button type="button" onClick={() => navigator.clipboard.writeText(`https://cendhake.vercel.app/${link.slug}`)} aria-label="Copy">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path
                               strokeLinecap="round"
@@ -131,7 +131,7 @@ export default function Home() {
                         </button>
                       </td>
                       <td className="px-6 py-4 text-center whitespace-no-wrap">
-                        <button type="button" onClick={() => confirm('Apakah anda yakin untuk menghapus?') && handleDelete(link.slug)}>
+                        <button type="button" onClick={() => confirm('Apakah anda yakin untuk menghapus?') && handleDelete(link.slug)} aria-label="Delete">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path
                               strokeLinecap="round"
