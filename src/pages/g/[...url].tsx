@@ -39,8 +39,8 @@ const Page = () => {
   return (
     <div className="container">
       Generate short url
-      <a className="" href={`${process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/${shorturl.slug}` : `http://localhost:3000/${shorturl.slug}`}`}>
-        {`${process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/${shorturl.slug}` : `http://localhost:3000/${shorturl.slug}`}`}
+      <a className="" href={`${process.env.NEXT_PUBLIC_BASE_URL ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/${shorturl.slug}` : `http://localhost:3000/${shorturl.slug}`}`}>
+        {`${process.env.NEXT_PUBLIC_BASE_URL ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/${shorturl.slug}` : `http://localhost:3000/${shorturl.slug}`}`}
       </a>
     </div>
   );
