@@ -31,7 +31,9 @@ function Slug({ params }: Props) {
   };
 
   useEffect(() => {
-    getLink(params.slug);
+    if (!params.slug.includes('/g')) {
+      getLink(params.slug);
+    }
   }, []);
   return <div className="container">{errorMsg !== '' ? <p className="text-red-500">{errorMsg}</p> : <p className="text-zinc-800">{loading ? 'Loading...' : `Redirect to ${link}`}</p>}</div>;
 }
